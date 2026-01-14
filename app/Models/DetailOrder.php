@@ -8,7 +8,7 @@ class DetailOrder extends Model
 {
     protected $fillable = [
         'order_id',
-        'tiket_id',
+        'ticket_id',
         'jumlah',
         'subtotal',
     ];
@@ -18,8 +18,8 @@ class DetailOrder extends Model
         return $this->belongsTo(Order::class);
     }
 
-    public function tiket()
+    public function ticket()
     {
-        return $this->belongsTo(Ticket::class);
+        return $this->belongsTo(Ticket::class, 'ticket_id');
     }
 }

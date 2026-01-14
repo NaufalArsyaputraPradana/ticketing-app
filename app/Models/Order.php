@@ -2,15 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    use HasFactory;
+
+    protected $casts = [
+        'total_harga' => 'decimal:2',
+        'order_date' => 'datetime',
+    ];
+
     protected $fillable = [
         'user_id',
         'event_id',
         'order_date',
-        'total_price',
+        'total_harga',
     ];
 
     public function user()
@@ -18,14 +26,15 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function tikets()
+    public function tickets()
     {
-        return $this->belongsToMany(Ticket::class, 'detail_orders')->withPivot('jumlah', 'subtotal_harga');
+        return $this->belongsToMany(Ticket::class, 'detail_orders')
+            ->withPivot('jumlah', 'subtotal_harga');
     }
 
-    public function events()
+    public function event()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
     public function detailOrders()
