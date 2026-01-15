@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Admin Routes
-    Route::prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         // Category Management
@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('events', AdminEventController::class);
 
         // Tiket Management 
-        Route::resource('tickets', TiketController::class);
+        Route::resource('tikets', TiketController::class);
 
         // Histories
         Route::get('/histories', [HistoriesController::class, 'index'])->name('histories.index');
