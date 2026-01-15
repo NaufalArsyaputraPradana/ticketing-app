@@ -12,7 +12,7 @@ use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $query = Event::with(['kategori', 'tikets']);
+    $query = Event::with(['kategori', 'tickets']);
 
     // Filter by category if provided
     if (request('kategori')) {
