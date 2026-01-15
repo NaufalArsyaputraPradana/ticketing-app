@@ -1,4 +1,33 @@
 <x-layouts.app>
+    <!-- Toast Notifications -->
+    @if (session('success'))
+        <div class="toast toast-top toast-end z-50">
+            <div class="alert alert-success shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ session('success') }}</span>
+            </div>
+        </div>
+        <script>
+            setTimeout(() => document.querySelector('.toast')?.remove(), 4000);
+        </script>
+    @endif
+
+    @if (session('error'))
+        <div class="toast toast-top toast-end z-50">
+            <div class="alert alert-error shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ session('error') }}</span>
+            </div>
+        </div>
+        <script>
+            setTimeout(() => document.querySelector('.toast')?.remove(), 4000);
+        </script>
+    @endif
+
     <div class="container mx-auto px-4 py-8">
         <!-- Breadcrumb -->
         <div class="text-sm breadcrumbs mb-6">
@@ -176,7 +205,7 @@
                 <form method="dialog">
                     <button class="btn">Batal</button>
                 </form>
-                <button type="button" class="btn btn-primary" onclick="confirmCheckout()">
+                <button type="button" class="btn btn-primary" id="confirmCheckout">
                     Konfirmasi Pembelian
                 </button>
             </div>
@@ -326,12 +355,16 @@
             document.getElementById('checkout_modal').showModal();
         }
 
-        // Confirm checkout
-        function confirmCheckout() {
+        // Confirm checkout - Event listener with async/await
+        document.getElementById('confirmCheckout').addEventListener('click', async () => {
+            const btn = document.getElementById('confirmCheckout');
+            btn.setAttribute('disabled', 'disabled');
+            btn.textContent = 'Memproses...';
+
             // Collect selected tickets into items array
             const items = [];
             tickets.forEach(ticket => {
-                const qty = parseInt(document.getElementById(`qty-${ticket.id}`).value) || 0;
+                const qty = Number(document.getElementById(`qty-${ticket.id}`).value || 0);
                 if (qty > 0) {
                     items.push({
                         ticket_id: ticket.id,
@@ -342,55 +375,87 @@
 
             // Validate
             if (items.length === 0) {
-                alert('Silakan pilih tiket terlebih dahulu');
+                showToast('Silakan pilih tiket terlebih dahulu', 'error');
+                btn.removeAttribute('disabled');
+                btn.textContent = 'Konfirmasi Pembelian';
                 return;
             }
 
-            // Disable button to prevent double submission
-            const confirmBtn = event.target;
-            confirmBtn.disabled = true;
-            confirmBtn.textContent = 'Memproses...';
+            try {
+                const res = await fetch('{{ route("orders.store") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        event_id: {{ $event->id }},
+                        items: items
+                    })
+                });
 
-            // Send to backend
-            fetch('{{ route("orders.store") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    event_id: eventId,
-                    items: items
-                })
-            })
-            .then(response => {
                 // Handle unauthenticated
-                if (response.status === 401) {
-                    alert('Sesi Anda telah berakhir. Silakan login kembali.');
+                if (res.status === 401) {
                     window.location.href = '{{ route("login") }}';
-                    return Promise.reject('Unauthenticated');
+                    return;
                 }
-                return response.json();
-            })
-            .then(data => {
-                if (data.ok) {
-                    alert('Pembelian berhasil!');
-                    window.location.href = '{{ route("orders.index") }}';
-                } else {
-                    alert('Terjadi kesalahan: ' + (data.message || 'Silakan coba lagi'));
-                    confirmBtn.disabled = false;
-                    confirmBtn.textContent = 'Konfirmasi Pembelian';
+
+                if (!res.ok) {
+                    const text = await res.text();
+                    throw new Error(text || 'Gagal membuat pesanan');
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                if (error !== 'Unauthenticated') {
-                    alert('Terjadi kesalahan: ' + error.message);
-                    confirmBtn.disabled = false;
-                    confirmBtn.textContent = 'Konfirmasi Pembelian';
-                }
-            });
+
+                const data = await res.json();
+                
+                // Redirect to orders page where success message will be shown
+                window.location.href = data.redirect || '{{ route("orders.index") }}';
+
+            } catch (err) {
+                console.error('Error:', err);
+                showToast('Terjadi kesalahan: ' + err.message, 'error');
+                btn.removeAttribute('disabled');
+                btn.textContent = 'Konfirmasi Pembelian';
+                document.getElementById('checkout_modal').close();
+            }
+        });
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            // Remove existing toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            // Determine icon and alert class
+            let icon, alertClass;
+            if (type === 'success') {
+                alertClass = 'alert-success';
+                icon = `<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>`;
+            } else {
+                alertClass = 'alert-error';
+                icon = `<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>`;
+            }
+
+            // Create toast
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-top toast-end z-50';
+            toast.innerHTML = `
+                <div class="alert ${alertClass} shadow-lg">
+                    ${icon}
+                    <span>${message}</span>
+                </div>
+            `;
+
+            document.body.appendChild(toast);
+
+            // Auto remove after 4 seconds
+            setTimeout(() => toast.remove(), 4000);
         }
     </script>
 </x-layouts.app>

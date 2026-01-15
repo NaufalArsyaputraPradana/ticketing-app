@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Regular User',
                 'email' => 'user@gmail.com',
-                'password' => bcrypt('password'),
+                'password' => Hash::make('password'),
                 'no_hp' => '081234567890',
                 'role' => 'user',
             ]

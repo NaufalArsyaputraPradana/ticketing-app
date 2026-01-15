@@ -1,61 +1,596 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BengTix - Ticketing App
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
 </p>
 
-## About Laravel
+<p align="center">
+  <strong>Sistem Pemesanan Tiket Event Berbasis Web</strong><br>
+  <em>Beli tiket, auto asik! 🚀</em>
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/TailwindCSS-3.x-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind">
+  <img src="https://img.shields.io/badge/DaisyUI-5.x-5A0EF8?style=for-the-badge" alt="DaisyUI">
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Informasi Project
 
-## Learning Laravel
+| Keterangan | Detail |
+|-----------|--------|
+| **Nama** | Naufal Arsyaputra Pradana |
+| **NIM** | A11.2022.14606 |
+| **Program Studi** | Teknik Informatika |
+| **Fakultas** | Ilmu Komputer |
+| **Universitas** | Universitas Dian Nuswantoro |
+| **Mata Kuliah** | Bimbingan Karir - Skema Web Developer |
+| **Tahun Akademik** | 2025 |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tentang Project
 
-## Laravel Sponsors
+**BengTix** adalah aplikasi web sistem pemesanan tiket event yang dikembangkan menggunakan framework **Laravel 11** dengan konsep modern web development. Aplikasi ini memungkinkan pengguna untuk mencari, memfilter, dan memesan tiket berbagai event seperti konser musik, festival, pameran seni, kompetisi olahraga, dan acara lainnya dengan mudah dan aman.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Tujuan Pengembangan
 
-### Premium Partners
+Sistem ini dikembangkan untuk:
+- Memahami alur bisnis sistem ticketing event secara menyeluruh
+- Menerapkan konsep **CRUD (Create, Read, Update, Delete)** dalam pengelolaan data
+- Mengimplementasikan arsitektur **MVC (Model-View-Controller)** Laravel
+- Menguasai **Role-Based Access Control** untuk keamanan aplikasi
+- Mempelajari **Database Relationships** (One-to-Many, Many-to-Many)
+- Menerapkan **Transaction Management** untuk pembelian tiket
+- Menggunakan **Eloquent ORM** untuk query optimization
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Fitur Utama
 
-## Contributing
+#### Keamanan & Autentikasi
+- **Role-Based Access Control** - Sistem autentikasi dengan 2 role (Admin & User)
+- **Middleware Protection** - Proteksi route admin dan user
+- **Session Management** - Pengelolaan sesi login yang aman
+- **CSRF Protection** - Keamanan dari serangan Cross-Site Request Forgery
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Ticketing Features
+- **Multi-Ticket Types** - Support tiket Regular dan Premium
+- **Stock Management** - Real-time stock tracking
+- **Transaction Lock** - Mencegah overselling dengan database locking
+- **Order History** - Pencatatan lengkap riwayat pembelian
+- **Detailed Invoice** - Tampilan detail pesanan yang informatif
 
-## Code of Conduct
+#### Content Management
+- **Image Upload System** - Upload dan manajemen gambar event
+- **File Validation** - Validasi format dan ukuran file
+- **Auto Image Optimization** - Kompresi otomatis untuk performa
+- **Fallback Images** - Default image jika gambar error
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Admin Dashboard
+- **Event Management** - CRUD lengkap untuk event
+- **Category Management** - Pengelolaan kategori event
+- **Ticket Configuration** - Pengaturan harga dan stok tiket
+- **Transaction Monitoring** - Monitoring semua transaksi pembelian
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Tujuan Pembelajaran
+
+Proyek ini bertujuan untuk meningkatkan kompetensi dalam:
+
+1. ✅ Memahami alur bisnis sistem ticketing event
+2. ✅ Menguasai konsep MVC (Model-View-Controller)
+3. ✅ Mengimplementasikan CRUD operations
+4. ✅ Mengelola database dengan migrations & seeders
+5. ✅ Menerapkan autentikasi & authorization (Laravel Breeze)
+6. ✅ Menggunakan middleware untuk proteksi route
+7. ✅ Mengelola file upload dan storage
+8. ✅ Mengimplementasikan relasi database (One-to-Many, Many-to-One)
+9. ✅ Membuat validasi client-side dan server-side
+10. ✅ Menerapkan best practices dalam pengembangan web modern
+
+---
+
+## Fitur Aplikasi
+
+### Fitur User (Pembeli)
+
+| No | Fitur | Deskripsi | Status |
+|----|-------|-----------|--------|
+| 1 | **Login** | Sistem autentikasi user menggunakan Laravel Breeze | ✅ |
+| 2 | **Browse Events** | Melihat daftar event yang tersedia dengan tampilan grid card | ✅ |
+| 3 | **Filter by Category** | Filter event berdasarkan kategori (Konser, Festival, Pameran, Olahraga) | ✅ |
+| 4 | **Event Detail** | Melihat detail lengkap event beserta tiket yang tersedia | ✅ |
+| 5 | **Ticket Selection** | Memilih tipe tiket (Regular/Premium) dengan quantity selector | ✅ |
+| 6 | **Shopping Summary** | Ringkasan pembelian real-time di sidebar | ✅ |
+| 7 | **Checkout Process** | Proses checkout dengan modal konfirmasi | ✅ |
+| 8 | **Order History** | Melihat riwayat pembelian tiket dengan detail lengkap | ✅ |
+| 9 | **Order Detail** | Tampilan invoice detail pesanan | ✅ |
+| 10 | **Profile Management** | Edit profil dan ubah password | ✅ |
+| 11 | **Responsive Navigation** | Navigasi yang responsif dengan dropdown menu | ✅ |
+
+### Fitur Admin
+
+| No | Fitur | Deskripsi | Status |
+|----|-------|-----------|--------|
+| 1 | **Dashboard Analytics** | Statistik total events, categories, dan orders | ✅ |
+| 2 | **Quick Links** | Akses cepat ke fitur-fitur utama | ✅ |
+| 3 | **Kategori - Create** | Tambah kategori event baru dengan validasi | ✅ |
+| 4 | **Kategori - Read** | Lihat daftar kategori dalam table dengan pagination | ✅ |
+| 5 | **Kategori - Update** | Edit nama kategori dengan modal | ✅ |
+| 6 | **Kategori - Delete** | Hapus kategori dengan konfirmasi (cek dependency) | ✅ |
+| 7 | **Event - Create** | Tambah event baru dengan upload gambar | ✅ |
+| 8 | **Event - Read** | Lihat daftar event dengan info kategori dan jumlah tiket | ✅ |
+| 9 | **Event - Update** | Edit event dengan replace/keep gambar existing | ✅ |
+| 10 | **Event - Delete** | Hapus event beserta gambar | ✅ |
+| 11 | **Event - Show Detail** | Lihat detail event lengkap dengan daftar tiket | ✅ |
+| 12 | **Tiket - Create** | Tambah tiket untuk event (Regular/Premium) | ✅ |
+| 13 | **Tiket - Read** | Lihat daftar tiket per event | ✅ |
+| 14 | **Tiket - Update** | Edit harga dan stok tiket | ✅ |
+| 15 | **Tiket - Delete** | Hapus tiket dari event | ✅ |
+| 16 | **History - Index** | Lihat semua transaksi pembelian | ✅ |
+| 17 | **History - Show** | Lihat detail transaksi lengkap | ✅ |
+| 18 | **Stock Indicators** | Visual color-coded stock status (Hijau/Kuning/Merah) | ✅ |
+| 19 | **Sidebar Navigation** | Navigasi sidebar drawer yang collapsible | ✅ |
+| 20 | **Toast Notifications** | Notifikasi feedback untuk setiap aksi | ✅ |
+
+---
+
+## Teknologi yang Digunakan
+
+### Backend Stack
+```
+├── Laravel 11.x         → PHP Framework dengan Eloquent ORM
+├── PHP 8.2+             → Programming Language
+├── MySQL 8.0            → Relational Database Management System
+├── Laravel Breeze       → Authentication Scaffolding
+└── Composer             → PHP Dependency Manager
+```
+
+### Frontend Stack
+```
+├── Blade Template       → Laravel Template Engine
+├── Tailwind CSS 3.x     → Utility-first CSS Framework
+├── DaisyUI v5           → Tailwind CSS Component Library
+├── Alpine.js            → Lightweight JavaScript Framework
+├── Vite 5.x             → Frontend Build Tool & Development Server
+└── SweetAlert2          → Beautiful Alert Dialogs
+```
+
+### Development Tools
+```
+├── Composer             → PHP Dependency Manager
+├── NPM/Node.js          → JavaScript Package Manager
+├── Git                  → Version Control System
+├── VS Code              → Code Editor (Recommended)
+└── Laravel Debugbar     → Debugging Tool (Development)
+```
+
+---
+
+## Skema Database
+
+### Entity Relationship Diagram (ERD)
+
+```
+┌─────────────┐       ┌──────────────┐       ┌─────────────┐
+│    users    │──────<│    events    │>──────│ categories  │
+│             │ 1:N   │              │ N:1   │             │
+│ • id        │       │ • id         │       │ • id        │
+│ • name      │       │ • judul      │       │ • nama      │
+│ • email     │       │ • deskripsi  │       └─────────────┘
+│ • password  │       │ • waktu      │
+│ • role      │       │ • lokasi     │
+└─────────────┘       │ • gambar     │
+       │              │ • category_id│
+       │ 1:N          │ • user_id    │
+       │              └──────────────┘
+       │                     │ 1:N
+       │                     ▼
+       │              ┌──────────────┐
+       │              │   tickets    │
+       │              │              │
+       │              │ • id         │
+       │              │ • event_id   │
+       │              │ • type       │
+       │              │ • harga      │
+       │              │ • stok       │
+       │              └──────────────┘
+       │                     │
+       │ 1:N                 │ 1:N
+       ▼                     ▼
+┌─────────────┐       ┌──────────────────┐
+│   orders    │──────<│ detail_orders    │
+│             │ 1:N   │                  │
+│ • id        │       │ • id             │
+│ • user_id   │       │ • order_id       │
+│ • event_id  │       │ • ticket_id      │
+│ • order_date│       │ • jumlah         │
+│ • total_harga       │ • subtotal       │
+└─────────────┘       └──────────────────┘
+```
+
+### Struktur Tabel Detail
+
+#### Tabel: `users`
+| Field | Type | Description |
+|-------|------|-------------|
+| id | BIGINT (PK) | Primary Key |
+| name | VARCHAR(255) | Nama lengkap user |
+| email | VARCHAR(255) UNIQUE | Email user (untuk login) |
+| password | VARCHAR(255) | Password ter-hash |
+| role | ENUM('admin','user') | Role user |
+| created_at | TIMESTAMP | Tanggal dibuat |
+| updated_at | TIMESTAMP | Tanggal diupdate |
+
+#### Tabel: `categories`
+| Field | Type | Description |
+|-------|------|-------------|
+| id | BIGINT (PK) | Primary Key |
+| nama | VARCHAR(255) UNIQUE | Nama kategori |
+| created_at | TIMESTAMP | Tanggal dibuat |
+| updated_at | TIMESTAMP | Tanggal diupdate |
+
+#### Tabel: `events`
+| Field | Type | Description |
+|-------|------|-------------|
+| id | BIGINT (PK) | Primary Key |
+| judul | VARCHAR(255) | Judul event |
+| deskripsi | TEXT | Deskripsi lengkap event |
+| waktu | DATETIME | Waktu pelaksanaan event |
+| lokasi | VARCHAR(255) | Lokasi event |
+| gambar | VARCHAR(255) | Nama file gambar |
+| category_id | BIGINT (FK) | Foreign Key ke categories |
+| user_id | BIGINT (FK) | Foreign Key ke users (creator) |
+| created_at | TIMESTAMP | Tanggal dibuat |
+| updated_at | TIMESTAMP | Tanggal diupdate |
+
+#### Tabel: `tickets`
+| Field | Type | Description |
+|-------|------|-------------|
+| id | BIGINT (PK) | Primary Key |
+| event_id | BIGINT (FK) | Foreign Key ke events |
+| type | ENUM('regular','premium') | Tipe tiket |
+| harga | DECIMAL(10,2) | Harga tiket |
+| stok | INTEGER | Jumlah stok tersedia |
+| created_at | TIMESTAMP | Tanggal dibuat |
+| updated_at | TIMESTAMP | Tanggal diupdate |
+
+#### Tabel: `orders`
+| Field | Type | Description |
+|-------|------|-------------|
+| id | BIGINT (PK) | Primary Key |
+| user_id | BIGINT (FK) | Foreign Key ke users |
+| event_id | BIGINT (FK) | Foreign Key ke events |
+| order_date | DATETIME | Tanggal pemesanan |
+| total_harga | DECIMAL(10,2) | Total harga pesanan |
+| created_at | TIMESTAMP | Tanggal dibuat |
+| updated_at | TIMESTAMP | Tanggal diupdate |
+
+#### Tabel: `detail_orders`
+| Field | Type | Description |
+|-------|------|-------------|
+| id | BIGINT (PK) | Primary Key |
+| order_id | BIGINT (FK) | Foreign Key ke orders |
+| ticket_id | BIGINT (FK) | Foreign Key ke tickets |
+| jumlah | INTEGER | Jumlah tiket dibeli |
+| subtotal | DECIMAL(10,2) | Subtotal per item |
+| created_at | TIMESTAMP | Tanggal dibuat |
+| updated_at | TIMESTAMP | Tanggal diupdate |
+
+### Relasi Database
+
+```
+users (1) ──────────── (N) events
+users (1) ──────────── (N) orders
+categories (1) ──────── (N) events
+events (1) ──────────── (N) tickets
+events (1) ──────────── (N) orders
+orders (1) ──────────── (N) detail_orders
+tickets (1) ──────────── (N) detail_orders
+```
+
+---
+
+## Instalasi dan Setup
+
+### Prasyarat
+
+| Software | Versi Minimum | Download Link |
+|----------|---------------|---------------|
+| **PHP** | 8.2 atau lebih tinggi | [php.net](https://www.php.net/downloads) |
+| **Composer** | 2.6+ | [getcomposer.org](https://getcomposer.org/) |
+| **Node.js** | 18.x atau lebih tinggi | [nodejs.org](https://nodejs.org/) |
+| **NPM** | 9.x+ (bundled with Node.js) | - |
+| **MySQL** | 8.0+ | [mysql.com](https://www.mysql.com/) |
+| **XAMPP** | 8.2.x (optional) | [apachefriends.org](https://www.apachefriends.org/) |
+
+### Langkah Instalasi
+
+#### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/yourusername/ticketing-app.git
+cd ticketing-app
+```
+
+#### 2️⃣ Install Dependencies PHP
+
+```bash
+composer install
+```
+
+> **Note**: Proses ini akan menginstall semua package Laravel yang dibutuhkan termasuk Laravel Breeze untuk authentication.
+
+#### 3️⃣ Install Dependencies JavaScript
+
+```bash
+npm install
+```
+
+> **Note**: Menginstall Tailwind CSS, DaisyUI, Vite, dan package frontend lainnya.
+
+#### 4️⃣ Setup Environment File
+
+```bash
+# Windows (PowerShell)
+Copy-Item .env.example .env
+
+# Linux/Mac
+cp .env.example .env
+```
+
+Kemudian generate application key:
+
+```bash
+php artisan key:generate
+```
+
+#### 5️⃣ Konfigurasi Database
+
+**Menggunakan MySQL**
+
+1. Buat database baru di MySQL:
+```sql
+CREATE DATABASE ticketing_app CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+2. Edit file `.env`:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ticketing_app
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+#### 6️⃣ Migrasi & Seeding Database
+
+```bash
+# Jalankan migrasi untuk membuat tabel
+php artisan migrate
+
+# Isi database dengan data dummy
+php artisan db:seed
+```
+
+> **Data Seeder**:
+> - **Admin**: email: `admin@gmail.com` | password: `admin123`
+> - **User**: email: `user@gmail.com` | password: `user123`
+> - 4 Categories (Konser, Festival, Pameran, Olahraga)
+> - 10 Events dengan gambar
+> - Tiket Regular & Premium untuk setiap event
+> - Sample orders
+
+**Atau jalankan sekaligus (Fresh Migration + Seed)**:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+#### 7️⃣ Create Storage Link
+
+```bash
+php artisan storage:link
+```
+
+> Membuat symbolic link dari `public/storage` ke `storage/app/public`
+
+#### 8️⃣ Build Frontend Assets
+
+```bash
+# Development mode (with hot reload)
+npm run dev
+
+# Production build
+npm run build
+```
+
+#### 9️⃣ Jalankan Development Server
+
+Buka terminal baru dan jalankan:
+
+```bash
+php artisan serve
+```
+
+Aplikasi akan berjalan di: **http://127.0.0.1:8000**
+
+---
+
+## Cara Menggunakan Aplikasi
+
+### Akses Admin
+
+1. Buka browser dan akses: `http://127.0.0.1:8000`
+2. Klik **Login** di navigation bar
+3. Login dengan kredensial admin:
+   ```
+   Email: admin@gmail.com
+   Password: password
+   ```
+4. Setelah login, Anda akan diarahkan ke **Admin Dashboard**
+
+### Akses User
+
+1. **Login User**:
+   ```
+   Email: user@gmail.com
+   Password: password
+   ```
+
+2. **Browse & Order Tiket**:
+   - Browse event di homepage
+   - Filter berdasarkan kategori
+   - Klik event untuk melihat detail
+   - Pilih jumlah tiket (Regular/Premium)
+   - Klik **Checkout**
+   - Konfirmasi pesanan
+
+3. **Cek Riwayat Pesanan**:
+   - Klik **Pesanan Saya** di navigation
+   - Lihat daftar pesanan
+   - Klik **Lihat Detail** untuk invoice lengkap
+
+---
+
+## Struktur Folder Project
+
+```
+ticketing-app/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/
+│   │   │   │   ├── CategoryController.php
+│   │   │   │   ├── DashboardController.php
+│   │   │   │   ├── EventController.php
+│   │   │   │   ├── HistoriesController.php
+│   │   │   │   └── TicketController.php
+│   │   │   ├── User/
+│   │   │   │   ├── EventController.php
+│   │   │   │   ├── HomeController.php
+│   │   │   │   └── OrderController.php
+│   │   │   └── ProfileController.php
+│   │   ├── Middleware/
+│   │   │   └── AdminMiddleware.php
+│   │   └── Requests/
+│   └── Models/
+│       ├── Category.php
+│       ├── DetailOrder.php
+│       ├── Event.php
+│       ├── Order.php
+│       ├── Ticket.php
+│       └── User.php
+├── database/
+│   ├── migrations/
+│   ├── seeders/
+│   │   ├── CategorySeeder.php
+│   │   ├── EventSeeder.php
+│   │   ├── OrderSeeder.php
+│   │   ├── TicketSeeder.php
+│   │   └── UserSeeder.php
+│   └── database.sqlite
+├── public/
+│   ├── images/
+│   │   └── events/        # Upload event images
+│   └── assets/
+│       └── images/        # Static assets
+├── resources/
+│   ├── views/
+│   │   ├── admin/
+│   │   │   ├── category/
+│   │   │   ├── dashboard.blade.php
+│   │   │   ├── event/
+│   │   │   ├── history/
+│   │   │   └── ticket/
+│   │   ├── auth/
+│   │   ├── components/
+│   │   │   ├── admin/
+│   │   │   │   └── sidebar.blade.php
+│   │   │   ├── layouts/
+│   │   │   │   ├── admin.blade.php
+│   │   │   │   └── app.blade.php
+│   │   │   └── user/
+│   │   │       ├── category-pill.blade.php
+│   │   │       ├── event-card.blade.php
+│   │   │       └── navigation.blade.php
+│   │   ├── events/
+│   │   │   └── show.blade.php
+│   │   ├── home.blade.php
+│   │   ├── orders/
+│   │   │   ├── index.blade.php
+│   │   │   └── show.blade.php
+│   │   └── profile/
+│   ├── css/
+│   │   └── app.css
+│   └── js/
+│       ├── app.js
+│       └── bootstrap.js
+├── routes/
+│   ├── web.php
+│   └── auth.php
+├── .env.example
+├── composer.json
+├── package.json
+├── tailwind.config.js
+├── vite.config.js
+└── README.md
+```
+
+---
+
+## Role & Permission
+
+| Role | Akses | Deskripsi |
+|------|-------|-----------|
+| **Admin** | `/admin/*` | Full access ke dashboard admin, CRUD categories, events, tickets, dan view history transaksi |
+| **User** | `/`, `/events/*`, `/orders/*` | Browse events, order tickets, view order history |
+| **Guest** | `/`, `/events/*` | Browse events only (read-only), harus login untuk order |
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# ticketing-app
-# ticketing-app
+Proyek ini dikembangkan untuk keperluan akademik di Universitas Dian Nuswantoro.
+
+---
+
+## Developer Contact
+
+**Naufal Arsyaputra Pradana**
+- NIM: A11.2022.14606
+- Email: 111202214606@mhs.dinus.ac.id
+- GitHub: https://github.com/NaufalArsyaputraPradana/ticketing-app
+
+---
+
+## References & Learning Resources
+
+### Module Notion
+- [WBK 2025 - Ticketing App](https://www.notion.so/WBK-2025-Ticketing-App-2e08d8819df1801a8409dbe948fc17f9)
+
+### Laravel Official Documentation
+- [Laravel 11 Docs](https://laravel.com/docs/11.x)
+- [Eloquent ORM](https://laravel.com/docs/11.x/eloquent)
+- [Blade Templates](https://laravel.com/docs/11.x/blade)
+- [Laravel Breeze](https://laravel.com/docs/11.x/starter-kits#breeze)
+
+### Frontend Resources
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- [DaisyUI Components](https://daisyui.com/components/)
+- [Alpine.js](https://alpinejs.dev/)
+
+---
+
+<p align="center">
+  <strong> BengTix - Beli tiket, auto asik!</strong><br>
+  <sub>Developed by Naufal Arsyaputra Pradana</sub><br>
+  <sub>© 2026 Universitas Dian Nuswantoro</sub>
+</p>
+
+---
