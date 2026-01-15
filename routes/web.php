@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
-use App\Http\Controllers\Admin\TiketController;
+use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\HistoriesController;
 use App\Http\Controllers\EventController;
 use App\Models\Category;
@@ -47,8 +47,8 @@ Route::middleware('auth')->group(function () {
         // Event Management
         Route::resource('events', AdminEventController::class);
 
-        // Tiket Management 
-        Route::resource('tikets', TiketController::class);
+        // Ticket Management 
+        Route::resource('tickets', TicketController::class);
 
         // Histories
         Route::get('/histories', [HistoriesController::class, 'index'])->name('histories.index');

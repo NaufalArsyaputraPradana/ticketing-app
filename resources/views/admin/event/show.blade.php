@@ -3,7 +3,7 @@
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Detail Event</h1>
-            <p class="text-sm text-gray-500 mt-1">Informasi lengkap event</p>
+            <p class="text-sm text-gray-500 mt-1">Informasi lengkap event dan kelola tiket</p>
         </div>
 
         <!-- Event Details Card -->
@@ -11,15 +11,15 @@
             <div class="p-6 border-b border-gray-100">
                 <h2 class="font-semibold text-gray-700">Informasi Event</h2>
             </div>
-            <div class="p-6 space-y-4">
+            <div class="p-6 space-y-6">
                 <!-- Gambar Event -->
                 @if ($event->gambar)
                     <div class="form-control">
-                        <label class="label">
+                        <label class="label pb-2">
                             <span class="label-text font-semibold text-gray-700">Gambar Event</span>
                         </label>
                         <div class="max-w-md">
-                            <div class="rounded-lg border-2 border-gray-200 overflow-hidden">
+                            <div class="rounded-lg border-2 border-gray-200 overflow-hidden shadow-md">
                                 <img src="{{ asset('images/events/' . $event->gambar) }}" 
                                      alt="{{ $event->judul }}" 
                                      class="w-full h-auto object-cover">
@@ -30,57 +30,57 @@
 
                 <!-- Judul Event -->
                 <div class="form-control">
-                    <label class="label">
+                    <label class="label pb-2">
                         <span class="label-text font-semibold text-gray-700">Judul Event</span>
                     </label>
                     <input type="text" 
                            value="{{ $event->judul }}" 
-                           class="input input-bordered w-full" 
-                           disabled />
+                           class="input input-bordered w-full border-2 bg-base-200" 
+                           readonly />
                 </div>
 
                 <!-- Deskripsi -->
                 <div class="form-control">
-                    <label class="label">
+                    <label class="label pb-2">
                         <span class="label-text font-semibold text-gray-700">Deskripsi</span>
                     </label>
-                    <textarea class="textarea textarea-bordered h-24 w-full" 
-                              disabled>{{ $event->deskripsi }}</textarea>
+                    <textarea class="textarea textarea-bordered h-24 w-full border-2 bg-base-200" 
+                              readonly>{{ $event->deskripsi }}</textarea>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Tanggal & Waktu -->
                     <div class="form-control">
-                        <label class="label">
+                        <label class="label pb-2">
                             <span class="label-text font-semibold text-gray-700">Tanggal & Waktu</span>
                         </label>
                         <input type="text" 
                                value="{{ $event->waktu->format('d M Y, H:i') }}" 
-                               class="input input-bordered w-full" 
-                               disabled />
+                               class="input input-bordered w-full border-2 bg-base-200" 
+                               readonly />
                     </div>
 
                     <!-- Kategori -->
                     <div class="form-control">
-                        <label class="label">
+                        <label class="label pb-2">
                             <span class="label-text font-semibold text-gray-700">Kategori</span>
                         </label>
                         <input type="text" 
                                value="{{ $event->kategori->nama ?? '-' }}" 
-                               class="input input-bordered w-full" 
-                               disabled />
+                               class="input input-bordered w-full border-2 bg-base-200" 
+                               readonly />
                     </div>
                 </div>
 
                 <!-- Lokasi -->
                 <div class="form-control">
-                    <label class="label">
+                    <label class="label pb-2">
                         <span class="label-text font-semibold text-gray-700">Lokasi</span>
                     </label>
                     <input type="text" 
                            value="{{ $event->lokasi }}" 
-                           class="input input-bordered w-full" 
-                           disabled />
+                           class="input input-bordered w-full border-2 bg-base-200" 
+                           readonly />
                 </div>
 
                 <!-- Action Buttons -->
@@ -199,8 +199,7 @@
                     <select name="type" class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" required>
                         <option value="" disabled selected>Pilih Tipe</option>
                         <option value="regular">Regular</option>
-                        <option value="vip">VIP</option>
-                        <option value="vvip">VVIP</option>
+                        <option value="premium">Premium</option>
                     </select>
                 </div>
 
@@ -284,8 +283,7 @@
                     <select id="edit_type" name="type" class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" required>
                         <option value="" disabled>Pilih Tipe</option>
                         <option value="regular">Regular</option>
-                        <option value="vip">VIP</option>
-                        <option value="vvip">VVIP</option>
+                        <option value="premium">Premium</option>
                     </select>
                 </div>
 
