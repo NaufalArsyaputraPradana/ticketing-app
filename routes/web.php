@@ -6,29 +6,16 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\HistoriesController;
-use App\Http\Controllers\EventController;
-use App\Models\Category;
-use App\Models\Event;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\EventController as UserEventController;
+use App\Http\Controllers\User\OrderController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $query = Event::with(['kategori', 'tickets']);
-
-    // Filter by category if provided
-    if (request('kategori')) {
-        $query->where('category_id', request('kategori'));
-    }
-
-    $events = $query->get();
-
-    return view('home', [
-        'categories' => Category::all(),
-        'events' => $events
-    ]);
-})->name('home');
+// Homepage
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Public Event Detail
-Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/{event}', [UserEventController::class, 'show'])->name('events.show');
 
 Route::middleware('auth')->group(function () {
 
@@ -36,6 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Orders (User)
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
     // Admin Routes
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
