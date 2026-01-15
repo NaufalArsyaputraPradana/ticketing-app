@@ -1,32 +1,60 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\TiketController;
+use App\Http\Controllers\Admin\HistoriesController;
+use App\Http\Controllers\EventController;
 use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $query = Event::with(['kategori', 'tikets']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    // Filter by category if provided
+    if (request('kategori')) {
+        $query->where('category_id', request('kategori'));
+    }
+
+    $events = $query->get();
+
+    return view('home', [
+        'categories' => Category::all(),
+        'events' => $events
+    ]);
+})->name('home');
+
+// Public Event Detail
+Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 
 Route::middleware('auth')->group(function () {
+
+    // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    Route::resource('kategori', KategoriController::class);
-});
 
-Route::get('/', function () {
-    return view('home', [
-        'categories' => Category::all(),
-        'events' => Event::all()
-    ]);
-})->name('home');
+    // Admin Routes
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Category Management
+        Route::resource('categories', CategoryController::class);
+
+        // Event Management
+        Route::resource('events', AdminEventController::class);
+
+        // Tiket Management 
+        Route::resource('tickets', TiketController::class);
+
+        // Histories
+        Route::get('/histories', [HistoriesController::class, 'index'])->name('histories.index');
+        Route::get('/histories/{id}', [HistoriesController::class, 'show'])->name('histories.show');
+    });
+
+});
 
 require __DIR__ . '/auth.php';
