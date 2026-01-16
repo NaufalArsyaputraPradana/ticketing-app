@@ -17,7 +17,7 @@
         <!-- User Dropdown -->
         <div class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                <div class="w-10 rounded-full bg-gradient-to-br from-blue-900 to-blue-700 text-white flex items-center justify-center shadow-md">
+                <div class="w-10 rounded-full bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center shadow-md">
                     <span class="text-lg font-semibold">{{ substr(Auth::user()->name, 0, 1) }}</span>
                 </div>
             </label>

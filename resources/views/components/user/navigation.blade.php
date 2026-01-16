@@ -1,19 +1,29 @@
-<div class="navbar bg-white shadow-md sticky top-0 z-50 px-4 lg:px-8">
+<div class="navbar bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50 px-4 lg:px-8 backdrop-blur-md bg-white/95">
     <div class="navbar-start">
         <div class="dropdown">
-            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle lg:hidden hover:bg-teal-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
                 </svg>
             </div>
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a href="{{ route('home') }}">Home</a></li>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-xl bg-white rounded-2xl w-56 border border-gray-100">
+                <li><a href="{{ route('home') }}" class="flex items-center gap-3 py-3 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    Home
+                </a></li>
                 @auth
-                    <li><a href="{{ route('orders.index') }}">Pesanan Saya</a></li>
+                    <li><a href="{{ route('orders.index') }}" class="flex items-center gap-3 py-3 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                        Pesanan Saya
+                    </a></li>
                 @endauth
             </ul>
         </div>
-        <a href="{{ route('home') }}" class="flex items-center">
+        <a href="{{ route('home') }}" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <img src="{{ asset('assets/images/logo_bengkod.svg') }}" alt="BengTix Logo" class="h-10 lg:h-12" />
         </a>
     </div>

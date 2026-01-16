@@ -28,6 +28,6 @@ class Ticket extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'detail_orders')->withPivot('jumlah', 'subtotal_harga');
+        return $this->belongsToMany(Order::class, 'detail_orders')->withPivot('jumlah', 'subtotal');
     }
 }
