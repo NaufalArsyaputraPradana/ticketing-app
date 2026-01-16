@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DetailOrder;
 use App\Models\Order;
 use App\Models\Ticket;
+use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,11 @@ class OrderController extends Controller
     // show a specific order
     public function show(Order $order)
     {
+        // Ensure user can only view their own orders
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+        
         $order->load('detailOrders.ticket', 'event');
         return view('orders.show', compact('order'));
     }
@@ -43,6 +49,15 @@ class OrderController extends Controller
 
         $user = Auth::user();
 
+        // Check if event is expired
+        $event = Event::findOrFail($data['event_id']);
+        if ($event->waktu->isPast()) {
+            return response()->json([
+                'ok' => false, 
+                'message' => 'Event sudah berakhir. Tidak bisa membeli tiket.'
+            ], 422);
+        }
+
         try {
             // transaction
             $order = DB::transaction(function () use ($data, $user) {
@@ -51,7 +66,10 @@ class OrderController extends Controller
                 foreach ($data['items'] as $it) {
                     $t = Ticket::lockForUpdate()->findOrFail($it['ticket_id']);
                     if ($t->stok < $it['jumlah']) {
-                        throw new \Exception("Stok tidak cukup untuk tipe: {$t->type}");
+                        throw new \Exception("Stok tidak cukup untuk tipe tiket: {$t->type}. Sisa stok: {$t->stok}");
+                    }
+                    if ($t->stok <= 0) {
+                        throw new \Exception("Tiket {$t->type} sudah habis.");
                     }
                     $total += ($t->harga ?? 0) * $it['jumlah'];
                 }
@@ -82,7 +100,7 @@ class OrderController extends Controller
             });
 
             // flash success message to session so it appears after redirect
-            session()->flash('success', 'Pesanan berhasil dibuat.');
+            session()->flash('success', 'Pesanan berhasil dibuat! Total: Rp ' . number_format($order->total_harga, 0, ',', '.'));
 
             return response()->json(['ok' => true, 'order_id' => $order->id, 'redirect' => route('orders.index')]);
         } catch (\Exception $e) {

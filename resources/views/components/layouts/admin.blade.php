@@ -6,34 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>{{ $title ?? 'Admin Panel' }}</title>
+    <title>{{ $title ?? 'Admin Panel - BengTix' }}</title>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- DaisyUI CSS CDN -->
+    <!-- Tailwind CSS & DaisyUI -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="font-sans antialiased">
     <div class="drawer lg:drawer-open">
         <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col min-h-screen bg-base-200">
             <!-- Navbar -->
-            <div class="navbar bg-base-100 shadow-sm lg:hidden">
-                <div class="flex-none">
-                    <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            class="inline-block h-6 w-6 stroke-current">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </label>
-                </div>
-                <div class="flex-1">
-                    <a class="text-xl font-bold">Admin Panel</a>
-                </div>
-            </div>
+            @include('components.admin.navigation')
 
             <!-- Page content here -->
             <div class="flex-1 overflow-auto">
@@ -43,7 +35,7 @@
             <!-- Footer -->
             <footer class="footer footer-center bg-base-300 text-base-content p-4">
                 <aside>
-                    <p>Copyright © {{ date('Y') }} - All right reserved</p>
+                    <p>Copyright © {{ date('Y') }} BengTix - All rights reserved</p>
                 </aside>
             </footer>
         </div>

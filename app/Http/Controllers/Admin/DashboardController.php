@@ -18,6 +18,12 @@ class DashboardController extends Controller
         $totalEvents = Event::count();
         $totalCategories = Category::count();
         $totalOrders = Order::count();
-        return view('admin.dashboard', compact('totalEvents', 'totalCategories', 'totalOrders'));
+        $totalRevenue = Order::sum('total_harga');
+        $recentOrders = Order::with(['user', 'event'])
+            ->latest()
+            ->take(5)
+            ->get();
+            
+        return view('admin.dashboard', compact('totalEvents', 'totalCategories', 'totalOrders', 'totalRevenue', 'recentOrders'));
     }
 }

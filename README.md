@@ -313,7 +313,7 @@ tickets (1) ──────────── (N) detail_orders
 #### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/ticketing-app.git
+git clone https://github.com/NaufalArsyaputraPradana/ticketing-app.git
 cd ticketing-app
 ```
 

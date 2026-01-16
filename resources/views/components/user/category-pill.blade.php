@@ -3,8 +3,13 @@
 <button {{ $attributes->merge([
   'class' => 'btn btn-sm rounded-full px-6 normal-case font-medium transition-all ' .
     ($active
-      ? '!bg-blue-800 !text-white hover:!bg-blue-800'
-      : 'bg-white border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white')
-]) }}>
+      ? 'text-white border-none shadow-md'
+      : 'bg-white border-teal-600 text-teal-700 hover:text-white border-2')
+]) }} 
+@if($active)
+style="background: linear-gradient(to right, #0d9488, #0891b2);"
+@else
+style="hover:background: linear-gradient(to right, #0d9488, #0891b2);"
+@endif>
   {{ $label }}
 </button>

@@ -1,4 +1,4 @@
-<footer class="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
+<footer class="footer sm:footer-horizontal bg-gray-900 text-white p-10">
     <aside>
 
         <img width="150" height="150" src={{ asset("assets/images/logo_bengkod.svg") }} />

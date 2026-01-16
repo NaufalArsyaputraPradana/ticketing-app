@@ -15,9 +15,23 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <style>
+            @keyframes fade-in {
+                from { opacity: 0; transform: translateY(-20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in {
+                animation: fade-in 0.8s ease-out;
+            }
+            /* Ensure proper color rendering */
+            body {
+                background-color: #f9fafb !important;
+            }
+        </style>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="font-sans antialiased" style="background-color: #f9fafb;">
+        <div class="min-h-screen" style="background-color: #f9fafb;">
             @include('components.user.navigation')
 
             <!-- Page Heading -->
@@ -33,6 +47,9 @@
             <main>
                 {{ $slot }}
             </main>
+
+            @include('components.user.footer')
         </div>
+
     </body>
 </html>

@@ -55,7 +55,7 @@ class CategoryController extends Controller
             ]);
 
             if (!isset($payload['nama'])) {
-                return redirect()->route('categories.index')->with('error', 'Nama kategori wajib diisi.');
+                return redirect()->route('admin.categories.index')->with('error', 'Nama kategori wajib diisi.');
             }
 
             $category = Category::findOrFail($id);
