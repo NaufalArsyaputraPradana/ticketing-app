@@ -5,13 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::withCount('events')->orderBy('created_at', 'desc')->get();
         return view('admin.category.index', compact('categories'));
+    }
+
+    public function create()
+    {
+        return redirect()->route('admin.categories.index');
     }
 
     public function store(Request $request)
@@ -35,11 +41,21 @@ class CategoryController extends Controller
             ]);
 
             return redirect()->route('admin.categories.index')->with('success', 'Kategori "' . $payload['nama'] . '" berhasil ditambahkan!');
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', '❌ Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+
+    public function show(string $id)
+    {
+        return redirect()->route('admin.categories.index');
+    }
+
+    public function edit(string $id)
+    {
+        return redirect()->route('admin.categories.index');
     }
 
     public function update(Request $request, string $id)
@@ -64,7 +80,7 @@ class CategoryController extends Controller
             ]);
 
             return redirect()->route('admin.categories.index')->with('success', '✅ Kategori berhasil diperbarui menjadi "' . $payload['nama'] . '"!');
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', '❌ Terjadi kesalahan: ' . $e->getMessage());

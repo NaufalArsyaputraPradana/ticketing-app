@@ -59,21 +59,39 @@ class OrderController extends Controller
         }
 
         try {
-            // transaction
-            $order = DB::transaction(function () use ($data, $user) {
+            $order = DB::transaction(function () use ($data, $user, $event) {
                 $total = 0;
-                // validate stock and calculate total
+                $ticketData = [];
+
+                // Validate stock and calculate total
                 foreach ($data['items'] as $it) {
-                    $t = Ticket::lockForUpdate()->findOrFail($it['ticket_id']);
-                    if ($t->stok < $it['jumlah']) {
-                        throw new \Exception("Stok tidak cukup untuk tipe tiket: {$t->type}. Sisa stok: {$t->stok}");
+                    $ticket = Ticket::lockForUpdate()->findOrFail($it['ticket_id']);
+                    
+                    // Verify ticket belongs to the event
+                    if ($ticket->event_id != $data['event_id']) {
+                        throw new \Exception("Tiket tidak valid untuk event ini.");
                     }
-                    if ($t->stok <= 0) {
-                        throw new \Exception("Tiket {$t->type} sudah habis.");
+
+                    // Check stock availability
+                    if ($ticket->stok < $it['jumlah']) {
+                        throw new \Exception("Stok tidak cukup untuk tiket {$ticket->type}. Sisa stok: {$ticket->stok}");
                     }
-                    $total += ($t->harga ?? 0) * $it['jumlah'];
+
+                    if ($ticket->stok <= 0) {
+                        throw new \Exception("Tiket {$ticket->type} sudah habis.");
+                    }
+
+                    $subtotal = $ticket->harga * $it['jumlah'];
+                    $total += $subtotal;
+
+                    $ticketData[] = [
+                        'ticket' => $ticket,
+                        'jumlah' => $it['jumlah'],
+                        'subtotal' => $subtotal,
+                    ];
                 }
 
+                // Create order
                 $order = Order::create([
                     'user_id' => $user->id,
                     'event_id' => $data['event_id'],
@@ -81,25 +99,22 @@ class OrderController extends Controller
                     'total_harga' => $total,
                 ]);
 
-                foreach ($data['items'] as $it) {
-                    $t = Ticket::findOrFail($it['ticket_id']);
-                    $subtotal = ($t->harga ?? 0) * $it['jumlah'];
+                // Create detail orders and reduce stock
+                foreach ($ticketData as $data) {
                     DetailOrder::create([
                         'order_id' => $order->id,
-                        'ticket_id' => $t->id,
-                        'jumlah' => $it['jumlah'],
-                        'subtotal' => $subtotal,
+                        'ticket_id' => $data['ticket']->id,
+                        'jumlah' => $data['jumlah'],
+                        'subtotal' => $data['subtotal'],
                     ]);
 
-                    // reduce stock
-                    $t->stok = max(0, $t->stok - $it['jumlah']);
-                    $t->save();
+                    // Reduce stock
+                    $data['ticket']->decrement('stok', $data['jumlah']);
                 }
 
                 return $order;
             });
 
-            // flash success message to session so it appears after redirect
             session()->flash('success', 'Pesanan berhasil dibuat! Total: Rp ' . number_format($order->total_harga, 0, ',', '.'));
 
             return response()->json(['ok' => true, 'order_id' => $order->id, 'redirect' => route('orders.index')]);

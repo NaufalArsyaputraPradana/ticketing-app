@@ -28,7 +28,7 @@ class Order extends Model
 
     public function tickets()
     {
-        return $this->belongsToMany(Ticket::class, 'detail_orders')
+        return $this->belongsToMany(Ticket::class, 'detail_orders', 'order_id', 'ticket_id')
             ->withPivot('jumlah', 'subtotal');
     }
 

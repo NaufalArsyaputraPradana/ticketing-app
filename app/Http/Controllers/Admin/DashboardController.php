@@ -23,7 +23,7 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get();
-            
+
         return view('admin.dashboard', compact('totalEvents', 'totalCategories', 'totalOrders', 'totalRevenue', 'recentOrders'));
     }
 }

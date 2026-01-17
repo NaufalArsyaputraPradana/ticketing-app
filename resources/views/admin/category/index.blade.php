@@ -44,7 +44,7 @@
                                         Edit
                                     </button>
                                     <button class="btn btn-sm btn-error gap-1" 
-                                            onclick="confirmDelete({{ $category->id }}, '{{ $category->nama }}')">
+                                            onclick="openDeleteModal({{ $category->id }}, '{{ $category->nama }}')">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                         </svg>
@@ -225,20 +225,78 @@
         @method('DELETE')
     </form>
 
+    <!-- Delete Confirmation Modal -->
+    <dialog id="delete_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box border-2 border-error shadow-xl">
+            <div class="mb-6 pb-4 border-b border-error/20">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-error/10 rounded-full">
+                        <svg class="w-6 h-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Konfirmasi Hapus</h3>
+                        <p class="text-sm text-gray-500 mt-1">Tindakan ini tidak dapat dibatalkan</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <p class="text-gray-700 mb-2">Apakah Anda yakin ingin menghapus kategori:</p>
+                <div class="p-4 bg-error/5 border-l-4 border-error rounded-r">
+                    <p class="font-bold text-gray-800" id="delete_category_name"></p>
+                </div>
+                <p class="text-sm text-gray-500 mt-3">
+                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Data yang sudah dihapus tidak dapat dikembalikan.
+                </p>
+            </div>
+            
+            <div class="modal-action mt-6 pt-4 border-t border-gray-200">
+                <button type="button" class="btn btn-ghost gap-2 px-6" onclick="delete_modal.close()">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    Batal
+                </button>
+                <button type="button" class="btn btn-error gap-2 px-6" onclick="confirmDelete()">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    Ya, Hapus
+                </button>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
     <script>
+        let deleteId = null;
+
+        function openDeleteModal(id, nama) {
+            deleteId = id;
+            document.getElementById('delete_category_name').textContent = nama;
+            delete_modal.showModal();
+        }
+
+        function confirmDelete() {
+            if (deleteId) {
+                const form = document.getElementById('delete-form');
+                form.action = `/admin/categories/${deleteId}`;
+                form.submit();
+            }
+        }
+
         function openEditModal(id, nama) {
             const form = document.getElementById('edit_form');
             document.getElementById('edit_category_name').value = nama;
             form.action = `/admin/categories/${id}`;
             edit_modal.showModal();
-        }
-
-        function confirmDelete(id, nama) {
-            if (confirm(`Apakah Anda yakin ingin menghapus kategori "${nama}"?\n\nTindakan ini tidak dapat dibatalkan.`)) {
-                const form = document.getElementById('delete-form');
-                form.action = `/admin/categories/${id}`;
-                form.submit();
-            }
         }
     </script>
 

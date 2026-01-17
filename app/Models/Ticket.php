@@ -16,6 +16,10 @@ class Ticket extends Model
         'stok',
     ];
 
+    protected $casts = [
+        'harga' => 'decimal:2',
+    ];
+
     public function event()
     {
         return $this->belongsTo(Event::class);
@@ -23,11 +27,12 @@ class Ticket extends Model
 
     public function detailOrders()
     {
-        return $this->hasMany(DetailOrder::class);
+        return $this->hasMany(DetailOrder::class, 'ticket_id');
     }
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'detail_orders')->withPivot('jumlah', 'subtotal');
+        return $this->belongsToMany(Order::class, 'detail_orders', 'ticket_id', 'order_id')
+            ->withPivot('jumlah', 'subtotal');
     }
 }

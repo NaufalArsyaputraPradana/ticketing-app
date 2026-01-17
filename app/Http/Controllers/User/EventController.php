@@ -10,8 +10,12 @@ class EventController extends Controller
 {
     public function show(Event $event)
     {
-        $event->load(['tickets', 'kategori', 'user']);
+        $event->load(['tickets', 'category', 'user']);
 
-        return view('events.show', compact('event'));
+        // Calculate additional data
+        $isExpired = $event->waktu->isPast();
+        $totalStock = $event->tickets->sum('stok');
+
+        return view('events.show', compact('event', 'isExpired', 'totalStock'));
     }
 }

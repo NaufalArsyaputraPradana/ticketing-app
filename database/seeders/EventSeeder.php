@@ -14,11 +14,12 @@ class EventSeeder extends Seeder
     public function run(): void
     {
         $events = [
+            // Future events (available for purchase)
             [
                 'user_id' => 1,
                 'judul' => 'Konser Musik Rock',
                 'deskripsi' => 'Nikmati malam penuh energi dengan band rock terkenal.',
-                'waktu' => '2024-08-15 19:00:00',
+                'waktu' => '2026-08-15 19:00:00',
                 'lokasi' => 'Stadion Utama',
                 'category_id' => 1,
                 'gambar' => 'konser_rock.jpg',
@@ -27,7 +28,7 @@ class EventSeeder extends Seeder
                 'user_id' => 1,
                 'judul' => 'Pameran Seni Kontemporer',
                 'deskripsi' => 'Jelajahi karya seni modern dari seniman lokal dan internasional.',
-                'waktu' => '2024-09-10 10:00:00',
+                'waktu' => '2026-09-10 10:00:00',
                 'lokasi' => 'Galeri Seni Kota',
                 'category_id' => 2,
                 'gambar' => 'pameran_seni.jpg',
@@ -36,10 +37,30 @@ class EventSeeder extends Seeder
                 'user_id' => 1,
                 'judul' => 'Festival Makanan Internasional',
                 'deskripsi' => 'Cicipi berbagai hidangan lezat dari seluruh dunia.',
-                'waktu' => '2024-10-05 12:00:00',
+                'waktu' => '2026-10-05 12:00:00',
                 'lokasi' => 'Taman Kota',
                 'category_id' => 3,
                 'gambar' => 'festival_makanan.jpg',
+            ],
+            
+            // Expired events (for testing)
+            [
+                'user_id' => 1,
+                'judul' => 'Workshop Fotografi Profesional',
+                'deskripsi' => 'Belajar teknik fotografi dari fotografer profesional.',
+                'waktu' => '2025-12-20 09:00:00', // Past date
+                'lokasi' => 'Studio Foto Central',
+                'category_id' => 2,
+                'gambar' => 'workshop_foto.jpg',
+            ],
+            [
+                'user_id' => 1,
+                'judul' => 'Konser Jazz Malam Tahun Baru',
+                'deskripsi' => 'Rayakan tahun baru dengan musik jazz yang merdu.',
+                'waktu' => '2025-12-31 20:00:00', // Past date
+                'lokasi' => 'Hotel Grand Ballroom',
+                'category_id' => 1,
+                'gambar' => 'konser_jazz.jpg',
             ],
         ];
 

@@ -77,68 +77,6 @@ Sistem ini dikembangkan untuk:
 
 ---
 
-## Tujuan Pembelajaran
-
-Proyek ini bertujuan untuk meningkatkan kompetensi dalam:
-
-1. ✅ Memahami alur bisnis sistem ticketing event
-2. ✅ Menguasai konsep MVC (Model-View-Controller)
-3. ✅ Mengimplementasikan CRUD operations
-4. ✅ Mengelola database dengan migrations & seeders
-5. ✅ Menerapkan autentikasi & authorization (Laravel Breeze)
-6. ✅ Menggunakan middleware untuk proteksi route
-7. ✅ Mengelola file upload dan storage
-8. ✅ Mengimplementasikan relasi database (One-to-Many, Many-to-One)
-9. ✅ Membuat validasi client-side dan server-side
-10. ✅ Menerapkan best practices dalam pengembangan web modern
-
----
-
-## Fitur Aplikasi
-
-### Fitur User (Pembeli)
-
-| No | Fitur | Deskripsi | Status |
-|----|-------|-----------|--------|
-| 1 | **Login** | Sistem autentikasi user menggunakan Laravel Breeze | ✅ |
-| 2 | **Browse Events** | Melihat daftar event yang tersedia dengan tampilan grid card | ✅ |
-| 3 | **Filter by Category** | Filter event berdasarkan kategori (Konser, Festival, Pameran, Olahraga) | ✅ |
-| 4 | **Event Detail** | Melihat detail lengkap event beserta tiket yang tersedia | ✅ |
-| 5 | **Ticket Selection** | Memilih tipe tiket (Regular/Premium) dengan quantity selector | ✅ |
-| 6 | **Shopping Summary** | Ringkasan pembelian real-time di sidebar | ✅ |
-| 7 | **Checkout Process** | Proses checkout dengan modal konfirmasi | ✅ |
-| 8 | **Order History** | Melihat riwayat pembelian tiket dengan detail lengkap | ✅ |
-| 9 | **Order Detail** | Tampilan invoice detail pesanan | ✅ |
-| 10 | **Profile Management** | Edit profil dan ubah password | ✅ |
-| 11 | **Responsive Navigation** | Navigasi yang responsif dengan dropdown menu | ✅ |
-
-### Fitur Admin
-
-| No | Fitur | Deskripsi | Status |
-|----|-------|-----------|--------|
-| 1 | **Dashboard Analytics** | Statistik total events, categories, dan orders | ✅ |
-| 2 | **Quick Links** | Akses cepat ke fitur-fitur utama | ✅ |
-| 3 | **Kategori - Create** | Tambah kategori event baru dengan validasi | ✅ |
-| 4 | **Kategori - Read** | Lihat daftar kategori dalam table dengan pagination | ✅ |
-| 5 | **Kategori - Update** | Edit nama kategori dengan modal | ✅ |
-| 6 | **Kategori - Delete** | Hapus kategori dengan konfirmasi (cek dependency) | ✅ |
-| 7 | **Event - Create** | Tambah event baru dengan upload gambar | ✅ |
-| 8 | **Event - Read** | Lihat daftar event dengan info kategori dan jumlah tiket | ✅ |
-| 9 | **Event - Update** | Edit event dengan replace/keep gambar existing | ✅ |
-| 10 | **Event - Delete** | Hapus event beserta gambar | ✅ |
-| 11 | **Event - Show Detail** | Lihat detail event lengkap dengan daftar tiket | ✅ |
-| 12 | **Tiket - Create** | Tambah tiket untuk event (Regular/Premium) | ✅ |
-| 13 | **Tiket - Read** | Lihat daftar tiket per event | ✅ |
-| 14 | **Tiket - Update** | Edit harga dan stok tiket | ✅ |
-| 15 | **Tiket - Delete** | Hapus tiket dari event | ✅ |
-| 16 | **History - Index** | Lihat semua transaksi pembelian | ✅ |
-| 17 | **History - Show** | Lihat detail transaksi lengkap | ✅ |
-| 18 | **Stock Indicators** | Visual color-coded stock status (Hijau/Kuning/Merah) | ✅ |
-| 19 | **Sidebar Navigation** | Navigasi sidebar drawer yang collapsible | ✅ |
-| 20 | **Toast Notifications** | Notifikasi feedback untuk setiap aksi | ✅ |
-
----
-
 ## Teknologi yang Digunakan
 
 ### Backend Stack
@@ -253,7 +191,7 @@ Proyek ini bertujuan untuk meningkatkan kompetensi dalam:
 |-------|------|-------------|
 | id | BIGINT (PK) | Primary Key |
 | event_id | BIGINT (FK) | Foreign Key ke events |
-| type | ENUM('regular','premium') | Tipe tiket |
+| type | ENUM('reguler','premium') | Tipe tiket |
 | harga | DECIMAL(10,2) | Harga tiket |
 | stok | INTEGER | Jumlah stok tersedia |
 | created_at | TIMESTAMP | Tanggal dibuat |

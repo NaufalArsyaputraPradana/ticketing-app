@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'judul',
         'deskripsi',
@@ -23,14 +23,12 @@ class Event extends Model
         'waktu' => 'datetime',
     ];
 
-    protected $appends = ['tickets_min_harga', 'tickets_total_stok'];
-
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
 
-    public function kategori()
+    public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
@@ -39,20 +37,9 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
-    }
-
-    // Accessor for minimum ticket price
-    public function getTicketsMinHargaAttribute()
-    {
-        return $this->tickets()->min('harga') ?? 0;
-    }
-
-    // Accessor for total ticket stock
-    public function getTicketsTotalStokAttribute()
-    {
-        return $this->tickets()->sum('stok') ?? 0;
     }
 }
