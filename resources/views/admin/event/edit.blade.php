@@ -23,12 +23,12 @@
                                 Judul Event <span class="text-error">*</span>
                             </span>
                         </label>
-                        <input type="text" 
-                               name="judul" 
-                               placeholder="Contoh: Konser Musik Rock" 
-                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
+                        <input type="text"
+                               name="judul"
+                               placeholder="Contoh: Konser Musik Rock"
+                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                                value="{{ old('judul', $event->judul) }}"
-                               required 
+                               required
                                minlength="3"
                                maxlength="255" />
                         <label class="label pt-2">
@@ -45,9 +45,9 @@
                                 Deskripsi <span class="text-error">*</span>
                             </span>
                         </label>
-                        <textarea name="deskripsi" 
-                                  placeholder="Deskripsi lengkap tentang event..." 
-                                  class="textarea textarea-bordered h-24 w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
+                        <textarea name="deskripsi"
+                                  placeholder="Deskripsi lengkap tentang event..."
+                                  class="textarea textarea-bordered h-24 w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                                   required>{{ old('deskripsi', $event->deskripsi) }}</textarea>
                         <label class="label pt-2">
                             <span class="label-text-alt text-gray-500">
@@ -63,9 +63,9 @@
                                 Tanggal & Waktu <span class="text-error">*</span>
                             </span>
                         </label>
-                        <input type="datetime-local" 
-                               name="waktu" 
-                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
+                        <input type="datetime-local"
+                               name="waktu"
+                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                                value="{{ old('waktu', $event->waktu->format('Y-m-d\TH:i')) }}"
                                required />
                         <label class="label pt-2">
@@ -102,12 +102,12 @@
                                 Kategori <span class="text-error">*</span>
                             </span>
                         </label>
-                        <select name="category_id" 
-                                class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
+                        <select name="category_id"
+                                class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                                 required>
                             <option value="" disabled>Pilih Kategori</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" 
+                                <option value="{{ $category->id }}"
                                         {{ old('category_id', $event->category_id) == $category->id ? 'selected' : '' }}>
                                     {{ $category->nama }}
                                 </option>
@@ -125,15 +125,15 @@
                         <label class="label pb-2">
                             <span class="label-text font-semibold text-gray-700">Gambar Event</span>
                         </label>
-                        <input type="file" 
-                               name="gambar" 
+                        <input type="file"
+                               name="gambar"
                                id="gambarInput"
-                               accept="image/*" 
-                               class="file-input file-input-bordered w-full border-2" 
+                               accept="image/*"
+                               class="file-input file-input-bordered w-full border-2"
                                onchange="previewImage(event)" />
                         <label class="label pt-2">
                             <span class="label-text-alt text-gray-500">
-                                Format: JPG, PNG, GIF, SVG. Maksimal 2MB. Kosongkan jika tidak ingin mengubah gambar.
+                                Format: JPG, PNG, GIF, SVG. Maksimal 4MB. Kosongkan jika tidak ingin mengubah gambar.
                             </span>
                         </label>
                     </div>
@@ -148,9 +148,9 @@
                         <div class="max-w-md">
                             <div class="rounded-lg border-2 border-gray-200 overflow-hidden shadow-md">
                                 @if ($event->gambar)
-                                    <img id="previewImg" 
-                                         src="{{ asset('images/events/' . $event->gambar) }}" 
-                                         alt="Event Image" 
+                                    <img id="previewImg"
+                                         src="{{ asset('images/events/' . $event->gambar) }}"
+                                         alt="Event Image"
                                          class="w-full h-auto object-cover">
                                 @else
                                     <div class="bg-gray-100 flex items-center justify-center h-48">
@@ -218,7 +218,7 @@
         function previewImage(event) {
             const file = event.target.files[0];
             const previewImg = document.getElementById('previewImg');
-            
+
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {

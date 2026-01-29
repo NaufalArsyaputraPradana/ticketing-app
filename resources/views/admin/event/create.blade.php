@@ -22,12 +22,12 @@
                                 Judul Event <span class="text-error">*</span>
                             </span>
                         </label>
-                        <input type="text" 
-                               name="judul" 
-                               placeholder="Contoh: Konser Musik Rock" 
-                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
+                        <input type="text"
+                               name="judul"
+                               placeholder="Contoh: Konser Musik Rock"
+                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                                value="{{ old('judul') }}"
-                               required 
+                               required
                                minlength="3"
                                maxlength="255" />
                         <label class="label pt-2">
@@ -44,9 +44,9 @@
                                 Deskripsi <span class="text-error">*</span>
                             </span>
                         </label>
-                        <textarea name="deskripsi" 
-                                  placeholder="Deskripsi lengkap tentang event..." 
-                                  class="textarea textarea-bordered h-24 w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
+                        <textarea name="deskripsi"
+                                  placeholder="Deskripsi lengkap tentang event..."
+                                  class="textarea textarea-bordered h-24 w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                                   required>{{ old('deskripsi') }}</textarea>
                         <label class="label pt-2">
                             <span class="label-text-alt text-gray-500">
@@ -62,9 +62,9 @@
                                 Tanggal & Waktu <span class="text-error">*</span>
                             </span>
                         </label>
-                        <input type="datetime-local" 
-                               name="waktu" 
-                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
+                        <input type="datetime-local"
+                               name="waktu"
+                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                                value="{{ old('waktu') }}"
                                required />
                         <label class="label pt-2">
@@ -101,8 +101,8 @@
                                 Kategori <span class="text-error">*</span>
                             </span>
                         </label>
-                        <select name="category_id" 
-                                class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
+                        <select name="category_id"
+                                class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                                 required>
                             <option value="" disabled selected>Pilih Kategori</option>
                             @foreach ($categories as $category)
@@ -125,16 +125,16 @@
                                 Gambar Event <span class="text-error">*</span>
                             </span>
                         </label>
-                        <input type="file" 
-                               name="gambar" 
+                        <input type="file"
+                               name="gambar"
                                id="gambarInput"
-                               accept="image/*" 
-                               class="file-input file-input-bordered w-full border-2" 
+                               accept="image/*"
+                               class="file-input file-input-bordered w-full border-2"
                                onchange="previewImage(event)"
                                required />
                         <label class="label pt-2">
                             <span class="label-text-alt text-gray-500">
-                                Format: JPG, PNG, GIF, SVG. Maksimal 2MB
+                                Format: JPG, PNG, GIF, SVG. Maksimal 4MB
                             </span>
                         </label>
                     </div>
@@ -209,7 +209,7 @@
             const file = event.target.files[0];
             const imagePreview = document.getElementById('imagePreview');
             const previewImg = document.getElementById('previewImg');
-            
+
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {

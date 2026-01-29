@@ -19,7 +19,6 @@
     $isExpired = $date ? \Carbon\Carbon::parse($date)->isPast() : false;
     $isOutOfStock = $stock <= 0;
 
-    // Ambil nama lokasi jika object, fallback ke string
     $locationName = is_object($location) && isset($location->name) ? $location->name : (is_array($location) && isset($location['name']) ? $location['name'] : $location);
 @endphp
 

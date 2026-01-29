@@ -185,7 +185,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mb-6">
                 <p class="text-gray-700 mb-2">Apakah Anda yakin ingin menghapus event:</p>
                 <div class="p-4 bg-error/5 border-l-4 border-error rounded-r">
@@ -202,7 +202,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="modal-action mt-6 pt-4 border-t border-gray-200">
                 <button type="button" class="btn btn-ghost gap-2 px-6" onclick="delete_modal.close()">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

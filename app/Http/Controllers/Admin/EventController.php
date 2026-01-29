@@ -33,7 +33,7 @@ class EventController extends Controller
             'waktu' => 'required|date|after:now',
             'location_id' => 'required|exists:locations,id',
             'category_id' => 'required|exists:categories,id',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ], [
             'judul.required' => 'Judul event wajib diisi.',
             'judul.max' => 'Judul event maksimal 255 karakter.',
@@ -100,7 +100,7 @@ class EventController extends Controller
                 'waktu' => 'required|date',
                 'location_id' => 'required|exists:locations,id',
                 'category_id' => 'required|exists:categories,id',
-                'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             ], [
                 'judul.required' => 'Judul event wajib diisi.',
                 'judul.max' => 'Judul event maksimal 255 karakter.',

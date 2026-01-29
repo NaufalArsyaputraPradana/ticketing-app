@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\HistoriesController;
+use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\TicketTypeController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\EventController as UserEventController;
 use App\Http\Controllers\User\OrderController;
@@ -32,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
     // Admin Routes
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-    
+
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         // Category Management
@@ -41,7 +43,7 @@ Route::middleware('auth')->group(function () {
         // Event Management
         Route::resource('events', AdminEventController::class);
 
-        // Ticket Management 
+        // Ticket Management
         Route::resource('tickets', TicketController::class);
 
         // Histories
@@ -51,10 +53,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('payments', PaymentController::class);
 
         // Ticket Type Management
-        Route::resource('ticket-types', \App\Http\Controllers\Admin\TicketTypeController::class);
+        Route::resource('ticket-types', TicketTypeController::class);
 
         // Location Management
-        Route::resource('locations', \App\Http\Controllers\Admin\LocationController::class);
+        Route::resource('locations', LocationController::class);
     });
 
 });

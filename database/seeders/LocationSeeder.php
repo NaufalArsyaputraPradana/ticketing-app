@@ -13,10 +13,19 @@ class LocationSeeder extends Seeder
      */
     public function run(): void
     {
-         $locations = [
-            ['name' => 'Stadion Utama'],
-            ['name' => 'Galeri Seni Kota'],
-            ['name' => 'Ruang Seminar A'],
+        $locations = [
+            [
+                'name' => 'Stadion Utama',
+                'aktif' => 'Y',
+            ],
+            [
+                'name' => 'Galeri Seni Kota',
+                'aktif' => 'Y',
+            ],
+            [
+                'name' => 'Taman Kota',
+                'aktif' => 'Y',
+            ],
         ];
 
         foreach ($locations as $location) {
