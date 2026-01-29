@@ -13,7 +13,7 @@ class Event extends Model
         'judul',
         'deskripsi',
         'waktu',
-        'lokasi',
+        'location_id',
         'gambar',
         'category_id',
         'user_id',
@@ -23,9 +23,15 @@ class Event extends Model
         'waktu' => 'datetime',
     ];
 
+
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
     }
 
     public function category()

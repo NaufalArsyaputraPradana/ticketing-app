@@ -7,6 +7,7 @@ use App\Models\DetailOrder;
 use App\Models\Order;
 use App\Models\Ticket;
 use App\Models\Event;
+use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,25 +18,27 @@ class OrderController extends Controller
     public function index()
     {
         $user = Auth::user();
+
         $orders = Order::where('user_id', $user->id)
-            ->with(['event', 'detailOrders.ticket'])
+            ->with(['event', 'detailOrders.ticket', 'payment'])
             ->orderBy('created_at', 'desc')
             ->get();
-        
+
         return view('orders.index', compact('orders'));
     }
 
     // show a specific order
     public function show(Order $order)
     {
-        // Ensure user can only view their own orders
         if ($order->user_id !== Auth::id()) {
             abort(403);
         }
-        
-        $order->load('detailOrders.ticket', 'event');
+
+        $order->load('detailOrders.ticket', 'event', 'payment');
+
         return view('orders.show', compact('order'));
     }
+
 
     // store an order (AJAX POST)
     public function store(Request $request)
@@ -45,6 +48,7 @@ class OrderController extends Controller
             'items' => 'required|array|min:1',
             'items.*.ticket_id' => 'required|integer|exists:tickets,id',
             'items.*.jumlah' => 'required|integer|min:1',
+            'payment_id' => 'required|exists:payments,id',
         ]);
 
         $user = Auth::user();
@@ -53,7 +57,7 @@ class OrderController extends Controller
         $event = Event::findOrFail($data['event_id']);
         if ($event->waktu->isPast()) {
             return response()->json([
-                'ok' => false, 
+                'ok' => false,
                 'message' => 'Event sudah berakhir. Tidak bisa membeli tiket.'
             ], 422);
         }
@@ -66,7 +70,7 @@ class OrderController extends Controller
                 // Validate stock and calculate total
                 foreach ($data['items'] as $it) {
                     $ticket = Ticket::lockForUpdate()->findOrFail($it['ticket_id']);
-                    
+
                     // Verify ticket belongs to the event
                     if ($ticket->event_id != $data['event_id']) {
                         throw new \Exception("Tiket tidak valid untuk event ini.");
@@ -97,6 +101,7 @@ class OrderController extends Controller
                     'event_id' => $data['event_id'],
                     'order_date' => Carbon::now(),
                     'total_harga' => $total,
+                    'payment_id' => $data['payment_id'],
                 ]);
 
                 // Create detail orders and reduce stock

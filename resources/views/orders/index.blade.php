@@ -80,58 +80,67 @@
                                         <div class="divider"></div>
 
                                         <!-- Event Info -->
-                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                            <div class="flex items-center gap-3">
-                                                <div class="bg-primary/10 p-2 rounded-lg">
+                                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                                            <div class="flex items-center gap-3 min-w-0">
+                                                <div class="bg-primary/10 p-2 rounded-lg flex-shrink-0">
                                                     <svg class="w-5 h-5 text-primary" fill="none"
                                                         stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2"
-                                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                                        </path>
+                                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                     </svg>
                                                 </div>
-                                                <div>
+                                                <div class="min-w-0">
                                                     <p class="text-xs text-gray-500">Tanggal Event</p>
-                                                    <p class="font-semibold">
+                                                    <p class="font-semibold truncate">
                                                         {{ $order->event->waktu->locale('id')->translatedFormat('d M Y') }}
                                                     </p>
                                                 </div>
                                             </div>
-
-                                            <div class="flex items-center gap-3">
-                                                <div class="bg-primary/10 p-2 rounded-lg">
+                                            <div class="flex items-center gap-3 min-w-0">
+                                                <div class="bg-primary/10 p-2 rounded-lg flex-shrink-0">
                                                     <svg class="w-5 h-5 text-primary" fill="none"
                                                         stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2"
-                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
                                                 </div>
-                                                <div>
+                                                <div class="min-w-0">
                                                     <p class="text-xs text-gray-500">Waktu</p>
-                                                    <p class="font-semibold">{{ $order->event->waktu->format('H:i') }}
-                                                        WIB</p>
+                                                    <p class="font-semibold truncate">
+                                                        {{ $order->event->waktu->format('H:i') }} WIB</p>
                                                 </div>
                                             </div>
-
-                                            <div class="flex items-center gap-3">
-                                                <div class="bg-primary/10 p-2 rounded-lg">
+                                            <div class="flex items-center gap-3 min-w-0">
+                                                <div class="bg-primary/10 p-2 rounded-lg flex-shrink-0">
                                                     <svg class="w-5 h-5 text-primary" fill="none"
                                                         stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2"
-                                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                                        </path>
+                                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
-                                                        </path>
+                                                            stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                                     </svg>
                                                 </div>
-                                                <div>
+                                                <div class="min-w-0">
                                                     <p class="text-xs text-gray-500">Lokasi</p>
-                                                    <p class="font-semibold truncate max-w-[200px]">
-                                                        {{ $order->event->lokasi }}</p>
+                                                    <p class="font-semibold truncate">{{ $order->event->location->name ?? '-' }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-3 min-w-0">
+                                                <div class="bg-primary/10 p-2 rounded-lg flex-shrink-0">
+                                                    <svg class="w-5 h-5 text-primary" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24">
+                                                        <rect x="2" y="7" width="20" height="10" rx="2"
+                                                            stroke-width="2" />
+                                                        <path d="M2 10h20" stroke-width="2" />
+                                                    </svg>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <p class="text-xs text-gray-500">Pembayaran</p>
+                                                    <p class="font-semibold truncate">
+                                                        {{ $order->payment->payment_method }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,7 +154,7 @@
                                                 <div class="flex items-center justify-between py-2">
                                                     <div class="flex items-center gap-3">
                                                         <div class="badge badge-lg badge-primary">
-                                                            {{ ucfirst($detail->ticket->type) }}</div>
+                                                            {{ $detail->ticket->type->name ?? '-' }}</div>
                                                         <span class="text-gray-600">x {{ $detail->jumlah }}</span>
                                                     </div>
                                                     <div class="text-right">

@@ -111,6 +111,92 @@
                 </a>
             </li>
 
+            <!-- Pembayaran item -->
+            <li>
+                <a href="{{ route('admin.payments.index') }}"
+                    class="group relative is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-xl transition-all duration-300 {{ request()->routeIs('admin.payments.*') ? 'bg-white/20 shadow-lg shadow-white/10' : 'hover:bg-white/10' }}"
+                    data-tip="Pembayaran">
+                    <div class="flex items-center gap-3 w-full">
+                        <div class="relative flex-shrink-0">
+                            <div
+                                class="absolute inset-0 bg-white/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div
+                                class="relative p-2 bg-white/10 rounded-lg {{ request()->routeIs('admin.payments.*') ? 'bg-white/20' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 3a3 3 0 1 0 6 0a3 3 0 1 0-6 0" />
+                                </svg>
+                            </div>
+                        </div>
+                        <span class="is-drawer-close:hidden font-medium">Pembayaran</span>
+                    </div>
+                    @if (request()->routeIs('admin.payments.*'))
+                        <div
+                            class="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-l-full shadow-lg shadow-white/50">
+                        </div>
+                    @endif
+                </a>
+            </li>
+
+            <!-- Ticket Type item -->
+            <li>
+                <a href="{{ route('admin.ticket-types.index') }}"
+                    class="group relative is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-xl transition-all duration-300 {{ request()->routeIs('admin.ticket-types.*') ? 'bg-white/20 shadow-lg shadow-white/10' : 'hover:bg-white/10' }}"
+                    data-tip="Tipe Tiket">
+                    <div class="flex items-center gap-3 w-full">
+                        <div class="relative flex-shrink-0">
+                            <div
+                                class="absolute inset-0 bg-white/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div
+                                class="relative p-2 bg-white/10 rounded-lg {{ request()->routeIs('admin.ticket-types.*') ? 'bg-white/20' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16v16H4z" />
+                                    <path d="M9 9h6v6H9z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <span class="is-drawer-close:hidden font-medium">Tipe Tiket</span>
+                    </div>
+                    @if (request()->routeIs('admin.ticket-types.*'))
+                        <div
+                            class="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-l-full shadow-lg shadow-white/50">
+                        </div>
+                    @endif
+                </a>
+            </li>
+
+            <!-- Location item -->
+            <li>
+                <a href="{{ route('admin.locations.index') }}"
+                    class="group relative is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-xl transition-all duration-300 {{ request()->routeIs('admin.locations.*') ? 'bg-white/20 shadow-lg shadow-white/10' : 'hover:bg-white/10' }}"
+                    data-tip="Lokasi">
+                    <div class="flex items-center gap-3 w-full">
+                        <div class="relative flex-shrink-0">
+                            <div
+                                class="absolute inset-0 bg-white/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div
+                                class="relative p-2 bg-white/10 rounded-lg {{ request()->routeIs('admin.locations.*') ? 'bg-white/20' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <span class="is-drawer-close:hidden font-medium">Lokasi</span>
+                    </div>
+                    @if (request()->routeIs('admin.locations.*'))
+                        <div
+                            class="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-l-full shadow-lg shadow-white/50">
+                        </div>
+                    @endif
+                </a>
+            </li>
+            
+
             <div class="is-drawer-close:hidden">
                 <div class="flex items-center gap-2 px-2 mt-4 mb-2">
                     <div class="h-px flex-1 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Category;
+use App\Models\Location;
+use App\Models\TicketType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,10 +16,13 @@ class EventController extends Controller
     {
         $events = Event::with(['category', 'tickets'])->orderBy('created_at', 'desc')->get();
         return view('admin.event.index', compact('events'));
-    }    public function create()
+    }
+
+    public function create()
     {
         $categories = Category::all();
-        return view('admin.event.create', compact('categories'));
+        $locations = Location::orderBy('name')->get();
+        return view('admin.event.create', compact('categories', 'locations'));
     }
 
     public function store(Request $request)
@@ -26,7 +31,7 @@ class EventController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'waktu' => 'required|date|after:now',
-            'lokasi' => 'required|string|max:255',
+            'location_id' => 'required|exists:locations,id',
             'category_id' => 'required|exists:categories,id',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
@@ -36,8 +41,8 @@ class EventController extends Controller
             'waktu.required' => 'Waktu event wajib diisi.',
             'waktu.date' => 'Format waktu tidak valid.',
             'waktu.after' => 'Waktu event harus di masa depan.',
-            'lokasi.required' => 'Lokasi event wajib diisi.',
-            'lokasi.max' => 'Lokasi event maksimal 255 karakter.',
+            'location_id.required' => 'Lokasi event wajib dipilih.',
+            'location_id.exists' => 'Lokasi tidak valid.',
             'category_id.required' => 'Kategori event wajib dipilih.',
             'category_id.exists' => 'Kategori tidak valid.',
             'gambar.required' => 'Gambar event wajib diunggah.',
@@ -71,15 +76,17 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         $categories = Category::all();
         $tickets = $event->tickets;
+        $ticket_types = TicketType::all();
 
-        return view('admin.event.show', compact('event', 'categories', 'tickets'));
+    return view('admin.event.show', compact('event', 'categories', 'tickets', 'ticket_types'));
     }
 
     public function edit(string $id)
     {
         $event = Event::findOrFail($id);
         $categories = Category::all();
-        return view('admin.event.edit', compact('event', 'categories'));
+        $locations = Location::orderBy('name')->get();
+        return view('admin.event.edit', compact('event', 'categories', 'locations'));
     }
 
     public function update(Request $request, string $id)
@@ -91,7 +98,7 @@ class EventController extends Controller
                 'judul' => 'required|string|max:255',
                 'deskripsi' => 'required|string',
                 'waktu' => 'required|date',
-                'lokasi' => 'required|string|max:255',
+                'location_id' => 'required|exists:locations,id',
                 'category_id' => 'required|exists:categories,id',
                 'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ], [
@@ -100,8 +107,8 @@ class EventController extends Controller
                 'deskripsi.required' => 'Deskripsi event wajib diisi.',
                 'waktu.required' => 'Waktu event wajib diisi.',
                 'waktu.date' => 'Format waktu tidak valid.',
-                'lokasi.required' => 'Lokasi event wajib diisi.',
-                'lokasi.max' => 'Lokasi event maksimal 255 karakter.',
+                'location_id.required' => 'Lokasi event wajib dipilih.',
+                'location_id.exists' => 'Lokasi tidak valid.',
                 'category_id.required' => 'Kategori event wajib dipilih.',
                 'category_id.exists' => 'Kategori tidak valid.',
                 'gambar.image' => 'File harus berupa gambar.',

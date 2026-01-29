@@ -69,7 +69,7 @@
                     <label class="label pb-2">
                         <span class="label-text font-semibold text-gray-700">Lokasi</span>
                     </label>
-                    <input type="text" value="{{ $event->lokasi }}"
+                    <input type="text" value="{{ $event->location->name ?? '-' }}"
                         class="input input-bordered w-full border-2 bg-base-200" readonly />
                 </div>
 
@@ -124,7 +124,7 @@
                                     <span class="badge badge-ghost">{{ $index + 1 }}</span>
                                 </th>
                                 <td>
-                                    <span class="badge badge-primary">{{ ucfirst($ticket->type) }}</span>
+                                    <span class="badge badge-primary">{{ $ticket->type->name ?? '-' }}</span>
                                 </td>
                                 <td class="font-medium">Rp {{ number_format($ticket->harga, 0, ',', '.') }}</td>
                                 <td>
@@ -141,7 +141,7 @@
                                 <td>
                                     <div class="flex gap-2 justify-center">
                                         <button class="btn btn-sm btn-primary gap-1"
-                                            onclick="openEditModal({{ $ticket->id }}, '{{ $ticket->type }}', {{ $ticket->harga }}, {{ $ticket->stok }})">
+                                            onclick="openEditModal({{ $ticket->id }}, {{ $ticket->ticket_type_id }}, {{ $ticket->harga }}, {{ $ticket->stok }})">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -151,7 +151,7 @@
                                             Edit
                                         </button>
                                         <button class="btn btn-sm btn-error gap-1"
-                                            onclick="openDeleteTicketModal({{ $ticket->id }}, '{{ ucfirst($ticket->type) }}')">
+                                            onclick="openDeleteTicketModal({{ $ticket->id }}, '{{ $ticket->type->name ?? '-' }}')">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -204,12 +204,13 @@
                             Tipe Tiket <span class="text-error">*</span>
                         </span>
                     </label>
-                    <select name="type"
+                    <select name="ticket_type_id"
                         class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                         required>
                         <option value="" disabled selected>Pilih Tipe</option>
-                        <option value="reguler">Regular</option>
-                        <option value="premium">Premium</option>
+                        @foreach ($ticket_types as $type)
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -285,12 +286,13 @@
                             Tipe Tiket <span class="text-error">*</span>
                         </span>
                     </label>
-                    <select id="edit_type" name="type"
+                    <select id="edit_type" name="ticket_type_id"
                         class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
                         required>
                         <option value="" disabled>Pilih Tipe</option>
-                        <option value="reguler">Regular</option>
-                        <option value="premium">Premium</option>
+                        @foreach ($ticket_types as $type)
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -446,11 +448,11 @@
     <script>
         let deleteTicketId = null;
 
-        function openEditModal(ticketId, type, harga, stok) {
+        function openEditModal(ticketId, ticketTypeId, harga, stok) {
             const form = document.getElementById('editTicketForm');
             form.action = `/admin/tickets/${ticketId}`;
 
-            document.getElementById('edit_type').value = type;
+            document.getElementById('edit_type').value = ticketTypeId;
             document.getElementById('edit_harga').value = harga;
             document.getElementById('edit_stok').value = stok;
 

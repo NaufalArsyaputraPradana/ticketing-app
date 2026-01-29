@@ -65,7 +65,22 @@
                                     </div>
                                     <div>
                                         <p class="text-xs text-gray-500">Lokasi</p>
-                                        <p class="font-semibold">{{ $order->event?->lokasi ?? '-' }}</p>
+                                        <p class="font-semibold">{{ $order->event?->location?->name ?? '-' }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-primary/10 p-2 rounded-lg">
+                                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <rect x="2" y="7" width="20" height="10" rx="2"
+                                                stroke-width="2" />
+                                            <path d="M2 10h20" stroke-width="2" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Pembayaran</p>
+                                        <p class="font-semibold">{{ $order->payment?->payment_method ?? '-' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +114,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <p class="font-bold text-lg">{{ ucfirst($detail->ticket->type) }}</p>
+                                                <p class="font-bold text-lg">{{ $detail->ticket->type->name ?? '-' }}</p>
                                                 <p class="text-sm text-gray-500">Jumlah: {{ $detail->jumlah }} tiket
                                                 </p>
                                                 <p class="text-sm text-gray-500">@ Rp
@@ -134,7 +149,8 @@
                                             </svg>
                                             Berhasil
                                         </div>
-                                        <p class="text-xs text-gray-500 mt-2">{{ $order->order_date->diffForHumans() }}
+                                        <p class="text-xs text-gray-500 mt-2">
+                                            {{ $order->order_date->diffForHumans() }}
                                         </p>
                                     </div>
                                 </div>

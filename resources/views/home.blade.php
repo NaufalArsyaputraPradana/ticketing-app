@@ -80,7 +80,7 @@
         @if ($events->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach ($events as $event)
-                    <x-user.event-card :title="$event->judul" :date="$event->waktu" :location="$event->lokasi" :price="$event->tickets_min_harga"
+                    <x-user.event-card :title="$event->judul" :date="$event->waktu" :location="$event->location" :price="$event->tickets_min_harga"
                         :image="$event->gambar" :href="route('events.show', $event)" :stock="$event->tickets->sum('stok')" />
                 @endforeach
             </div>

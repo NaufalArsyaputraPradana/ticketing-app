@@ -11,7 +11,7 @@ class Ticket extends Model
     
     protected $fillable = [
         'event_id',
-        'type',
+        'ticket_type_id',
         'harga',
         'stok',
     ];
@@ -20,9 +20,15 @@ class Ticket extends Model
         'harga' => 'decimal:2',
     ];
 
+
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(TicketType::class, 'ticket_type_id');
     }
 
     public function detailOrders()

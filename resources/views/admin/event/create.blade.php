@@ -81,16 +81,15 @@
                                 Lokasi <span class="text-error">*</span>
                             </span>
                         </label>
-                        <input type="text" 
-                               name="lokasi" 
-                               placeholder="Contoh: Stadion Utama" 
-                               class="input input-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" 
-                               value="{{ old('lokasi') }}"
-                               required 
-                               maxlength="255" />
+                        <select name="location_id" class="select select-bordered w-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2" required>
+                            <option value="" disabled selected>Pilih Lokasi</option>
+                            @foreach ($locations as $location)
+                                <option value="{{ $location->id }}" {{ old('location_id') == $location->id ? 'selected' : '' }}>{{ $location->name }}</option>
+                            @endforeach
+                        </select>
                         <label class="label pt-2">
                             <span class="label-text-alt text-gray-500">
-                                Alamat lengkap lokasi event
+                                Pilih lokasi event dari daftar lokasi yang tersedia
                             </span>
                         </label>
                     </div>

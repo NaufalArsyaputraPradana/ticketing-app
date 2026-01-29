@@ -18,6 +18,9 @@
     // Check if event is expired
     $isExpired = $date ? \Carbon\Carbon::parse($date)->isPast() : false;
     $isOutOfStock = $stock <= 0;
+
+    // Ambil nama lokasi jika object, fallback ke string
+    $locationName = is_object($location) && isset($location->name) ? $location->name : (is_array($location) && isset($location['name']) ? $location['name'] : $location);
 @endphp
 
 <a href="{{ $href ?? '#' }}" class="block group">
@@ -69,7 +72,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span class="line-clamp-1">{{ $location }}</span>
+                <span class="line-clamp-1">{{ $locationName }}</span>
             </div>
 
             <div class="divider my-2"></div>

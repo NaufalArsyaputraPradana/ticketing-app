@@ -23,14 +23,14 @@ class TicketController extends Controller
     {
         $validatedData = $request->validate([
             'event_id' => 'required|exists:events,id',
-            'type' => 'required|in:reguler,premium',
+            'ticket_type_id' => 'required|exists:ticket_types,id',
             'harga' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
         ], [
             'event_id.required' => 'Event ID wajib diisi.',
             'event_id.exists' => 'Event tidak ditemukan.',
-            'type.required' => 'Tipe tiket wajib diisi.',
-            'type.in' => 'Tipe tiket harus reguler atau premium.',
+            'ticket_type_id.required' => 'Tipe tiket wajib diisi.',
+            'ticket_type_id.exists' => 'Tipe tiket tidak ditemukan.',
             'harga.required' => 'Harga tiket wajib diisi.',
             'harga.numeric' => 'Harga harus berupa angka.',
             'harga.min' => 'Harga tidak boleh negatif.',
@@ -41,13 +41,14 @@ class TicketController extends Controller
 
         // Check if ticket type already exists for this event
         $existingTicket = Ticket::where('event_id', $validatedData['event_id'])
-            ->where('type', $validatedData['type'])
+            ->where('ticket_type_id', $validatedData['ticket_type_id'])
             ->first();
 
         if ($existingTicket) {
+            $typeName = $existingTicket->type->name ?? '';
             return redirect()
                 ->route('admin.events.show', $validatedData['event_id'])
-                ->with('error', 'Tiket dengan tipe ' . $validatedData['type'] . ' sudah ada untuk event ini.');
+                ->with('error', 'Tiket dengan tipe ' . $typeName . ' sudah ada untuk event ini.');
         }
 
         // Create the ticket
@@ -71,12 +72,12 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($id);
 
         $validatedData = $request->validate([
-            'type' => 'required|in:reguler,premium',
+            'ticket_type_id' => 'required|exists:ticket_types,id',
             'harga' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
         ], [
-            'type.required' => 'Tipe tiket wajib diisi.',
-            'type.in' => 'Tipe tiket harus reguler atau premium.',
+            'ticket_type_id.required' => 'Tipe tiket wajib diisi.',
+            'ticket_type_id.exists' => 'Tipe tiket tidak ditemukan.',
             'harga.required' => 'Harga tiket wajib diisi.',
             'harga.numeric' => 'Harga harus berupa angka.',
             'harga.min' => 'Harga tidak boleh negatif.',
@@ -86,16 +87,17 @@ class TicketController extends Controller
         ]);
 
         // Check if changing type would create duplicate
-        if ($ticket->type !== $validatedData['type']) {
+        if ($ticket->ticket_type_id != $validatedData['ticket_type_id']) {
             $existingTicket = Ticket::where('event_id', $ticket->event_id)
-                ->where('type', $validatedData['type'])
+                ->where('ticket_type_id', $validatedData['ticket_type_id'])
                 ->where('id', '!=', $id)
                 ->first();
 
             if ($existingTicket) {
+                $typeName = $existingTicket->type->name ?? '';
                 return redirect()
                     ->route('admin.events.show', $ticket->event_id)
-                    ->with('error', 'Tiket dengan tipe ' . $validatedData['type'] . ' sudah ada untuk event ini.');
+                    ->with('error', 'Tiket dengan tipe ' . $typeName . ' sudah ada untuk event ini.');
             }
         }
 

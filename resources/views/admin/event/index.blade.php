@@ -62,7 +62,7 @@
                                 <span class="badge badge-outline">{{ $event->category->nama ?? '-' }}</span>
                             </td>
                             <td>{{ $event->waktu ? $event->waktu->format('d M Y') : '-' }}</td>
-                            <td>{{ $event->lokasi }}</td>
+                            <td>{{ $event->location->name ?? '-' }}</td>
                             <td>
                                 @php
                                     $totalStok = $event->tickets->sum('stok');

@@ -134,7 +134,7 @@
                                     </div>
                                     <div>
                                         <p class="text-xs text-gray-500">Lokasi</p>
-                                        <p class="font-bold">{{ $event->lokasi }}</p>
+                                        <p class="font-bold">{{ $event->location->name ?? '-' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +201,7 @@
                                                 class="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors">
                                                 <div class="flex justify-between items-start mb-2">
                                                     <div>
-                                                        <h3 class="font-bold text-lg">{{ ucfirst($ticket->type) }}
+                                                        <h3 class="font-bold text-lg">{{ ucfirst($ticket->type->name ?? '-') }}
                                                         </h3>
                                                         <p class="text-2xl font-bold text-primary">Rp
                                                             {{ number_format($ticket->harga, 0, ',', '.') }}</p>
@@ -300,7 +300,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             </svg>
-                            <span>{{ $event->lokasi }}</span>
+                            <span>{{ $event->location->name ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -321,13 +321,38 @@
                 </div>
             </div>
 
+            <!-- Tipe Pembayaran -->
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-4 mb-4">
+                <label for="payment_id" class="block text-sm font-semibold mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5 mr-1" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2m4-5h-6m6 0v6m0-6l-6 6" />
+                    </svg>
+                    Tipe Pembayaran
+                </label>
+                <select id="payment_id" name="payment_id"
+                    class="select select-bordered w-full bg-white text-gray-800 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 border-2"
+                    required>
+                    <option value="" disabled selected>Pilih Tipe Pembayaran</option>
+                    @foreach ($payments as $payment)
+                        <option value="{{ $payment->id }}"
+                            {{ old('payment_id') == $payment->id ? 'selected' : '' }}>
+                            {{ $payment->payment_method }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
             <!-- Total Price -->
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg p-4 mb-4">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-4 mb-4">
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-semibold">Total Pembayaran:</span>
                     <span id="modal-total-price" class="text-2xl font-bold">Rp 0</span>
                 </div>
             </div>
+
+
 
             <!-- Action Buttons -->
             <div class="modal-action mt-6">
@@ -448,8 +473,11 @@
                     return;
                 }
 
+                const paymentSelect = document.querySelector('select[name="payment_id"]');
+
                 const data = {
                     event_id: {{ $event->id }},
+                    payment_id: paymentSelect.value,
                     items: items
                 };
 
